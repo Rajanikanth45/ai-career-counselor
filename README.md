@@ -76,7 +76,7 @@ php artisan serve
 ## Notes
 
 - Ensure MongoDB is running and correctly configured in `.env`
-- Update the OpenAI API key in `.env` if AI features are enabled
+- Update the GEMINI API key in `.env` if AI features are enabled
 
 ## License
 
