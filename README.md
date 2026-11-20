@@ -52,7 +52,7 @@ An intelligent, full-stack AI career guidance and counseling platform built with
 - **Frontend & Reactivity**: [Laravel Livewire 3](https://livewire.laravel.com/), [Alpine.js](https://alpinejs.dev/), [Blade](https://laravel.com/docs/blade)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) & Vite
 - **AI Engine**: [Google Gemini API](https://ai.google.dev/) (`gemini-3.1-flash-lite`) via `GEMINI_API_KEY` (supports multiple load-balanced keys)
-- **Database**: SQLite (default, zero-setup) / MySQL / PostgreSQL via Laravel Eloquent ORM
+- **Database**: [MongoDB](https://www.mongodb.com/) (via [`mongodb/laravel-mongodb`](https://github.com/mongodb/laravel-mongodb))
 - **PDF Engine**: [Laravel DomPDF](https://github.com/barryvdh/laravel-dompdf)
 - **Authentication**: Laravel Breeze with Role-Based Access Control (`student`, `admin`)
 
@@ -60,7 +60,8 @@ An intelligent, full-stack AI career guidance and counseling platform built with
 
 ## 📋 System Requirements
 
-- **PHP**: `^8.2` or higher (with `mbstring`, `pdo_sqlite` or `pdo_mysql`, `curl`, and `openssl` extensions enabled)
+- **PHP**: `^8.2` or higher (with `mongodb`, `mbstring`, `curl`, and `openssl` extensions enabled)
+- **Database**: **MongoDB** (Local instance running at `mongodb://127.0.0.1:27017` or MongoDB Atlas cluster)
 - **Composer**: `^2.x`
 - **Node.js**: `18.x` or higher & **npm**
 - **Google Gemini API Key**: Free API key from [Google AI Studio](https://aistudio.google.com/)
@@ -94,23 +95,22 @@ Generate the Laravel application key:
 php artisan key:generate
 ```
 
-Configure your **Google Gemini API Key** and Database in `.env`:
+Configure your **MongoDB** connection and **Google Gemini API Key** in `.env`:
 ```env
-DB_CONNECTION=sqlite
-# For MySQL instead:
-# DB_CONNECTION=mysql
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_DATABASE=ai_career
-# DB_USERNAME=root
-# DB_PASSWORD=
+# MongoDB Database Configuration
+DB_CONNECTION=mongodb
+DB_URI=mongodb://localhost:27017
+# For MongoDB Atlas cloud connection:
+# DB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/?retryWrites=true&w=majority
+DB_DATABASE=career_platform
 
+# Google Gemini API Key
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 *(Tip: You can provide multiple comma-separated keys for load balancing, e.g., `GEMINI_API_KEY=key1,key2`)*.
 
 ### 4. Database Setup & Seeding
-Create the database and seed the pre-configured tests, questions, careers, and sample users:
+Ensure MongoDB is running, then run migrations and seed the pre-configured tests, career database, and sample users:
 ```bash
 php artisan migrate --force
 php artisan db:seed
